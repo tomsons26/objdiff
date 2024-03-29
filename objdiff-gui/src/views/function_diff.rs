@@ -128,10 +128,13 @@ fn ins_context_menu(ui: &mut egui::Ui, ins: &ObjIns) {
 
 fn find_symbol(obj: &ObjInfo, selected_symbol: &SymbolRefByName) -> Option<SymbolRef> {
     for (section_idx, section) in obj.sections.iter().enumerate() {
+        if section.name != "_DIFF_SEG" {
+            continue;
+        }        
         for (symbol_idx, symbol) in section.symbols.iter().enumerate() {
-            if symbol.name == selected_symbol.symbol_name {
+            //if sections.name == selected_symbol.symbol_name {
                 return Some(SymbolRef { section_idx, symbol_idx });
-            }
+            //}
         }
     }
     None

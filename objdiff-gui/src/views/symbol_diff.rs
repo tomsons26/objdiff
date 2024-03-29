@@ -290,7 +290,7 @@ fn symbol_list_ui(
                     .id_source(Id::new(section.name.clone()).with(section.orig_index))
                     .default_open(true)
                     .show(ui, |ui| {
-                        if section.kind == ObjSectionKind::Code && state.reverse_fn_order {
+                        if section.name == "_DIFF_SEG" && state.reverse_fn_order {
                             for (symbol, symbol_diff) in
                                 section.symbols.iter().zip(&section_diff.symbols).rev()
                             {

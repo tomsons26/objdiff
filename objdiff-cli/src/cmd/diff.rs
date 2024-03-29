@@ -231,13 +231,13 @@ fn get_symbol_diff(obj: Option<&ObjDiff>, sym: Option<SymbolRef>) -> Option<&Obj
 
 fn find_function(obj: &ObjInfo, name: &str) -> Option<SymbolRef> {
     for (section_idx, section) in obj.sections.iter().enumerate() {
-        if section.kind != ObjSectionKind::Code {
+        if section.name != "_DIFF_SEG" {
             continue;
         }
         for (symbol_idx, symbol) in section.symbols.iter().enumerate() {
-            if symbol.name == name {
+            //if symbol.name == name {
                 return Some(SymbolRef { section_idx, symbol_idx });
-            }
+            //}
         }
     }
     None

@@ -242,7 +242,7 @@ fn report_object(
     let obj = target.as_ref().or(base.as_ref()).unwrap();
     let obj_diff = result.left.as_ref().or(result.right.as_ref()).unwrap();
     for (section, section_diff) in obj.sections.iter().zip(&obj_diff.sections) {
-        if section.kind != ObjSectionKind::Code {
+        if section.name != "_DIFF_SEG" {
             continue;
         }
         for (symbol, symbol_diff) in section.symbols.iter().zip(&section_diff.symbols) {

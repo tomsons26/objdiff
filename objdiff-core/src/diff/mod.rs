@@ -354,6 +354,9 @@ fn matching_symbols(
     let mut right_used = HashSet::new();
     if let Some(left) = left {
         for (section_idx, section) in left.sections.iter().enumerate() {
+            if section.name != "_DIFF_SEG" {
+                continue;
+            }
             for (symbol_idx, symbol) in section.symbols.iter().enumerate() {
                 let symbol_match = SymbolMatch {
                     left: Some(SymbolRef { section_idx, symbol_idx }),
@@ -370,6 +373,9 @@ fn matching_symbols(
     }
     if let Some(right) = right {
         for (section_idx, section) in right.sections.iter().enumerate() {
+            if section.name != "_DIFF_SEG" {
+                continue;
+            }
             for (symbol_idx, symbol) in section.symbols.iter().enumerate() {
                 let symbol_ref = SymbolRef { section_idx, symbol_idx };
                 if right_used.contains(&symbol_ref) {
@@ -393,10 +399,10 @@ fn find_symbol(
     section_kind: ObjSectionKind,
 ) -> Option<SymbolRef> {
     for (section_idx, section) in obj?.sections.iter().enumerate() {
-        if section.kind != section_kind {
+        if section.name != "_DIFF_SEG" {
             continue;
         }
-        let symbol_idx = match section.symbols.iter().position(|symbol| symbol.name == name) {
+        let symbol_idx = match section.symbols.iter().position(|symbol| section.name == "_DIFF_SEG") {
             Some(symbol_idx) => symbol_idx,
             None => continue,
         };
