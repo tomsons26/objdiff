@@ -155,7 +155,7 @@ fn run_build(
         .as_ref()
         .ok_or_else(|| Error::msg("Missing project dir"))?;
     let target_path_rel = if let Some(target_path) = &obj_config.target_path {
-        Some(target_path.strip_prefix(project_dir).map_err(|_| {
+        Some(project_dir.strip_prefix(project_dir).map_err(|_| {
             anyhow!(
                 "Target path '{}' doesn't begin with '{}'",
                 target_path.display(),
